@@ -1,14 +1,17 @@
 package com.algaworks.algacomments.comment.service.api.service;
 
+import com.algaworks.algacomments.comment.service.api.client.ModerationClient;
 import com.algaworks.algacomments.comment.service.api.model.CommentInput;
 import com.algaworks.algacomments.comment.service.api.model.CommentOutput;
+import com.algaworks.algacomments.comment.service.api.model.ModerationtInput;
+import com.algaworks.algacomments.comment.service.api.model.ModerationOutput;
+import com.algaworks.algacomments.comment.service.domain.exception.ModerationRejectedException;
 import com.algaworks.algacomments.comment.service.domain.model.CommentEntity;
 import com.algaworks.algacomments.comment.service.domain.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,6 +25,7 @@ import java.util.UUID;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final ModerationClient moderationClient;
 
     public CommentOutput commentCreate(CommentInput commentInput){
 
@@ -31,6 +35,17 @@ public class CommentService {
                 .author(commentInput.getAuthor())
                 .createdAt(OffsetDateTime.now())
                 .build();
+
+        ModerationtInput moderationtInput = ModerationtInput.builder()
+                .commentId(commentEntityToInsert.getId())
+                .text(commentEntityToInsert.getText())
+                .build();
+
+        ModerationOutput moderationOutput = moderationClient.moderate(moderationtInput);
+
+        if(Boolean.FALSE.equals(moderationOutput.getApproved())){
+            throw new ModerationRejectedException(moderationOutput.getReason());
+        }
 
         CommentEntity commentEntity = commentRepository.saveAndFlush(commentEntityToInsert);
 

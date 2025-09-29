@@ -1,5 +1,6 @@
 package com.algaworks.algacomments.comment.service.api.controller;
 
+import com.algaworks.algacomments.comment.service.api.client.ModerationClient;
 import com.algaworks.algacomments.comment.service.api.model.CommentInput;
 import com.algaworks.algacomments.comment.service.api.model.CommentOutput;
 import com.algaworks.algacomments.comment.service.api.service.CommentService;
