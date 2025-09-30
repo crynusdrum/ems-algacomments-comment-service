@@ -7,8 +7,7 @@ import lombok.*;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-//@Getter
-//@Setter
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -21,5 +20,4 @@ public class CommentEntity {
     private String text;
     private String author;
     private OffsetDateTime createdAt;
-    //private OffsetDateTime createdAt = OffsetDateTime.now();
 }
