@@ -3,7 +3,7 @@ package com.algaworks.algacomments.comment.service.api.service;
 import com.algaworks.algacomments.comment.service.api.client.ModerationClient;
 import com.algaworks.algacomments.comment.service.api.model.CommentInput;
 import com.algaworks.algacomments.comment.service.api.model.CommentOutput;
-import com.algaworks.algacomments.comment.service.api.model.ModerationtInput;
+import com.algaworks.algacomments.comment.service.api.model.ModerationInput;
 import com.algaworks.algacomments.comment.service.api.model.ModerationOutput;
 import com.algaworks.algacomments.comment.service.domain.exception.ModerationRejectedException;
 import com.algaworks.algacomments.comment.service.domain.model.CommentEntity;
@@ -36,12 +36,12 @@ public class CommentService {
                 .createdAt(OffsetDateTime.now())
                 .build();
 
-        ModerationtInput moderationtInput = ModerationtInput.builder()
+        ModerationInput moderationInput = ModerationInput.builder()
                 .commentId(commentEntityToInsert.getId())
                 .text(commentEntityToInsert.getText())
                 .build();
 
-        ModerationOutput moderationOutput = moderationClient.moderate(moderationtInput);
+        ModerationOutput moderationOutput = moderationClient.moderate(moderationInput);
 
         if(Boolean.FALSE.equals(moderationOutput.getApproved())){
             throw new ModerationRejectedException(moderationOutput.getReason());

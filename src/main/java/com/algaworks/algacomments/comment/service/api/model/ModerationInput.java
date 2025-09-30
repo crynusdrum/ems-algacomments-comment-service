@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class ModerationtInput {
+public class ModerationInput {
 
     private UUID commentId;
     private String text;
