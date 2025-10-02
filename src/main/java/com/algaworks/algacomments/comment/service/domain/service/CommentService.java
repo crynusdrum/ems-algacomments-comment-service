@@ -1,4 +1,4 @@
-package com.algaworks.algacomments.comment.service.api.service;
+package com.algaworks.algacomments.comment.service.domain.service;
 
 import com.algaworks.algacomments.comment.service.api.client.ModerationClient;
 import com.algaworks.algacomments.comment.service.api.model.CommentInput;

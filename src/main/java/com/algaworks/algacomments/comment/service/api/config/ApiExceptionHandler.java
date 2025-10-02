@@ -36,9 +36,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handle(ModerationRejectedException e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
 
-        problemDetail.setTitle("Bad gateway");
+        problemDetail.setTitle("Unprocessable Entity");
         problemDetail.setDetail(e.getMessage());
-        problemDetail.setType(URI.create("/errors/bad-gateway"));
+        problemDetail.setType(URI.create("/errors/unprocessable-entity"));
 
         return problemDetail;
     }
